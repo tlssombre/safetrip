@@ -1,0 +1,10 @@
+# Dossier d'images uniquement : jamais d'exécution de code
+Options -Indexes -ExecCGI
+<FilesMatch "\.(php|phtml|php[0-9]|phar|pl|py|cgi|sh)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "\.(jpe?g|png|webp|gif)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "public, max-age=2592000"
+  </IfModule>
+</FilesMatch>

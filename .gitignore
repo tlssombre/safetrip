@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+coverage/
+deploy/
+legacy-supabase/
+.sixth/
+.DS_Store
+*.log
+
+# Secrets : jamais dans git
+.env*
+!.env.example
+server/api/config.php
+
+# Photos des résidences : données du site (déjà sur le serveur, gérées via l'admin), pas du code
+server/uploads/residences/

@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-serif: "Cormorant+Garamond", serif;
+  
+  --color-primary: #1a365d; /* Deep Navy Blue */
+  --color-secondary: #f8fafc; /* Very light blue/gray white */
+  --color-accent: #3b82f6; /* Modern Vibrant Blue */
+  --color-text-main: #1e293b;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50 text-slate-900 antialiased;
+  }
+
+  :focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
+  button, a, input, select { touch-action: manipulation; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+html { scroll-behavior: smooth; }
+html, body, #root { max-width: 100%; overflow-x: hidden; }
+@media (max-width: 767px) { body { padding-bottom: 5.5rem; } .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; } .no-scrollbar::-webkit-scrollbar { display: none; } }

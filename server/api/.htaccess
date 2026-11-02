@@ -1,0 +1,10 @@
+# Aucun accès direct aux fichiers de configuration
+<FilesMatch "^config(\.sample)?\.php$">
+  Require all denied
+</FilesMatch>
+
+# Les uploads d'images peuvent être lourds : limites côté PHP (ignorées si non autorisées par l'hébergeur)
+<IfModule mod_php.c>
+  php_value post_max_size 40M
+  php_value upload_max_filesize 40M
+</IfModule>

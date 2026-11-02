@@ -1,0 +1,50 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Nouvelle version de cache du service worker à chaque déploiement
+      - name: Bump service worker cache
+        run: sed -i "s/const CACHE_NAME = '.*';/const CACHE_NAME = 'safetrip-${GITHUB_SHA::7}';/" public/sw.js
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+      # Assemble ce qui part sur le serveur (sans config.php, sans photos : ils restent sur le serveur)
+      - name: Assemble site
+        run: |
+          mkdir -p out/api out/uploads
+          cp -r dist/. out/
+          cp server/api/index.php server/api/.htaccess out/api/
+          cp server/uploads/.htaccess out/uploads/
+
+      - name: Upload via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_DIR || '/' }}
+          exclude: |
+            **/config.php
+            uploads/residences/**

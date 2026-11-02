@@ -1,0 +1,14 @@
+{
+  "name": "Safe Trip CI",
+  "short_name": "Safe Trip",
+  "description": "Résidences de prestige à Abidjan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1a365d",
+  "lang": "fr-CI",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/safetrip-logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
